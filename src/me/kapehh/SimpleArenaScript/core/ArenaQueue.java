@@ -24,4 +24,20 @@ public class ArenaQueue {
         this.spawnLocations = spawnLocations;
         this.needPlayers = needPlayers;
     }
+
+    public boolean playerInQueue(Player player) {
+        return playerList.contains(player);
+    }
+
+    public void addPlayerToQueue(Player player) {
+        if (!playerList.contains(player)) {
+            playerList.add(player);
+            player.teleport(locationLobby);
+        }
+    }
+
+    public void removePlayerToQueue(Player player) {
+        playerList.remove(player);
+        player.teleport(locationIn);
+    }
 }

@@ -28,6 +28,10 @@ public class ArenaBattle {
         return players;
     }
 
+    public boolean playerInBattle(Player player) {
+        return players.contains(player);
+    }
+
     public boolean inArena(Player player) {
         return players.contains(player);
     }
