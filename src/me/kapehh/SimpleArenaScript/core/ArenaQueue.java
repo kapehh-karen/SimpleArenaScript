@@ -25,6 +25,22 @@ public class ArenaQueue {
         this.needPlayers = needPlayers;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public int getNeedPlayers() {
+        return needPlayers;
+    }
+
+    public Location generatePlayerSpawn() {
+        return null; // TODO: make this
+    }
+
+    public Location getLocationIn() {
+        return locationIn;
+    }
+
     public boolean playerInQueue(Player player) {
         return playerList.contains(player);
     }
@@ -39,5 +55,13 @@ public class ArenaQueue {
     public void removePlayerToQueue(Player player) {
         playerList.remove(player);
         player.teleport(locationIn);
+    }
+
+    public void addSpawnLocation(Location location) {
+        spawnLocations.add(location);
+    }
+
+    public void removeSpawnLocation(Location location) {
+        spawnLocations.remove(location);
     }
 }
