@@ -27,6 +27,16 @@ public class ArenaCore implements Listener, CommandExecutor {
 
     }
 
+    private Player getPlayer(String name) {
+        Player[] players = Bukkit.getOnlinePlayers();
+        for (Player player : players) {
+            if (player.getName().equalsIgnoreCase(name)) {
+                return player;
+            }
+        }
+        return null;
+    }
+
     private ArenaQueue getArenaQueue(String worldName) {
         for (ArenaQueue arenaQueue : arenaQueues) {
             if (arenaQueue.getWorldName().equalsIgnoreCase(worldName)) {
@@ -46,7 +56,7 @@ public class ArenaCore implements Listener, CommandExecutor {
 
     public void addPlayerToQueue(String arenaName, String playerName) {
         ArenaQueue arenaQueue = getArenaQueue(arenaName);
-        Player player = Bukkit.getPlayer(UUID.fromString(playerName));
+        Player player = getPlayer(playerName);
         if (arenaQueue != null && player != null) {
             arenaQueue.addPlayerToQueue(player);
         }
@@ -54,7 +64,7 @@ public class ArenaCore implements Listener, CommandExecutor {
 
     public void removePlayerFromQueue(String arenaName, String playerName) {
         ArenaQueue arenaQueue = getArenaQueue(arenaName);
-        Player player = Bukkit.getPlayer(UUID.fromString(playerName));
+        Player player = getPlayer(playerName);
         if (arenaQueue != null && player != null) {
             arenaQueue.removePlayerFromQueue(player);
         }
@@ -110,6 +120,6 @@ public class ArenaCore implements Listener, CommandExecutor {
         } else if (method.equalsIgnoreCase("remove")) {
             removePlayerFromQueue(arenaName, playerName);
         }
-        return false;
+        return true;
     }
 }
