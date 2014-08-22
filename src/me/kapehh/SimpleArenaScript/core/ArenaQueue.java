@@ -10,23 +10,56 @@ import java.util.List;
  * Created by Karen on 10.08.2014.
  */
 public class ArenaQueue {
-    private String name;
+    private ArenaBattle arenaBattle;
+    private String worldName;
     private Location locationIn;
     private Location locationLobby;
     private List<Location> spawnLocations = new ArrayList<Location>();
     private int needPlayers;
     private List<Player> playerList = new ArrayList<Player>();
 
-    public ArenaQueue(String name, Location locationIn, Location locationLobby, List<Location> spawnLocations, int needPlayers) {
-        this.name = name;
+    public ArenaQueue(String worldName, Location locationIn, Location locationLobby, List<Location> spawnLocations, int needPlayers) {
+        this.worldName = worldName;
         this.locationIn = locationIn;
         this.locationLobby = locationLobby;
         this.spawnLocations = spawnLocations;
         this.needPlayers = needPlayers;
+        this.arenaBattle = new ArenaBattle(this);
     }
 
-    public String getName() {
-        return name;
+    public void sendPlayersToArena() {
+        if (arenaBattle.isRunning()) {
+            return;
+        }
+        if (needPlayers <= playerList.size()) {
+            // TODO: Print all players in Battle, who entered to battle
+            for (int i = 0; i < needPlayers; i++) {
+                Player player = playerList.get(0);
+                arenaBattle.invitePlayer(player);
+                playerList.remove(0);
+            }
+        }
+    }
+
+    public void checkPlayerInArena() {
+        if (arenaBattle.isRunning() && arenaBattle.isSinglePlayer()) {
+            // TODO: Print all player in Battle, who winner
+            arenaBattle.reset();
+            sendPlayersToArena();
+        }
+    }
+
+    public void kickPlayerFromBattle(Player player) {
+        arenaBattle.kickPlayer(player);
+        checkPlayerInArena();
+    }
+
+    public boolean playerInBattle(Player player) {
+        return arenaBattle.inArena(player);
+    }
+
+    public String getWorldName() {
+        return worldName;
     }
 
     public int getNeedPlayers() {
@@ -34,7 +67,7 @@ public class ArenaQueue {
     }
 
     public Location generatePlayerSpawn() {
-        return null; // TODO: make this
+        return spawnLocations.get(0); // TODO: Random spawn
     }
 
     public Location getLocationIn() {
@@ -49,12 +82,16 @@ public class ArenaQueue {
         if (!playerList.contains(player)) {
             playerList.add(player);
             player.teleport(locationLobby);
+            sendPlayersToArena();
         }
     }
 
-    public void removePlayerToQueue(Player player) {
-        playerList.remove(player);
-        player.teleport(locationIn);
+    public void removePlayerFromQueue(Player player) {
+        if (playerList.contains(player)) {
+            playerList.remove(player);
+            player.teleport(locationIn);
+            checkPlayerInArena();
+        }
     }
 
     public void addSpawnLocation(Location location) {

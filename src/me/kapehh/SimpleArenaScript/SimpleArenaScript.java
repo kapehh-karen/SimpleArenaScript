@@ -1,5 +1,6 @@
 package me.kapehh.SimpleArenaScript;
 
+import me.kapehh.SimpleArenaScript.core.ArenaCore;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -35,6 +36,8 @@ public class SimpleArenaScript extends JavaPlugin {
             return;
         }
 
-
+        ArenaCore arenaCore = new ArenaCore();
+        getServer().getPluginManager().registerEvents(arenaCore, this);
+        getCommand("arenascript").setExecutor(arenaCore);
     }
 }

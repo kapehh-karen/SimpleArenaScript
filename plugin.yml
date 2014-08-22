@@ -2,7 +2,7 @@ name: SimpleArenaScript
 main: me.kapehh.SimpleArenaScript.SimpleArenaScript
 author: kapehh
 version: 1.0.0
-#commands:
-#    enchanterx:
-#      usage: /<command> <enchant name> <enchant level>
-#      description:
+commands:
+    arenascript:
+      usage: /<command> <arena> <player>
+      description: Simple Arena Script

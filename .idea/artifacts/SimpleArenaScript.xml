@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="SimpleArenaScript">
+    <output-path>$PROJECT_DIR$/out/artifacts/SimpleArenaScript</output-path>
+    <root id="archive" name="SimpleArenaScript.jar">
+      <element id="module-output" name="SimpleArenaScript" />
+      <element id="file-copy" path="$PROJECT_DIR$/plugin.yml" />
+    </root>
+  </artifact>
+</component>

@@ -16,10 +16,8 @@ public class ArenaBattle {
     private List<Player> players = new ArrayList<Player>();
     private int timeLeft;
 
-    public ArenaBattle(ArenaQueue arenaQueue, int configTime) {
+    public ArenaBattle(ArenaQueue arenaQueue) {
         this.arenaQueue = arenaQueue;
-        this.configTime = configTime;
-        this.timeLeft = configTime;
     }
 
     public boolean isRunning() {
@@ -46,6 +44,18 @@ public class ArenaBattle {
         }
     }
 
+    public void kickPlayer(Player player) {
+        if (players.contains(player)) {
+            players.remove(player);
+            player.teleport(arenaQueue.getLocationIn());
+            // TODO: Print player has left
+        }
+    }
+
+    public boolean isSinglePlayer() {
+        return players.size() < 2;
+    }
+
     public boolean inArena(Player player) {
         return players.contains(player);
     }
@@ -60,5 +70,9 @@ public class ArenaBattle {
 
     public boolean hasTime() {
         return timeLeft > 0;
+    }
+
+    public void setConfigTime(int configTime) {
+        this.configTime = configTime;
     }
 }
